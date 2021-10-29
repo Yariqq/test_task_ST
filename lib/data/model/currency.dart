@@ -6,6 +6,7 @@ class Currency {
   final int scale;
   final String name;
   final double rate;
+  bool isVisible;
 
   Currency({
     required this.id,
@@ -13,7 +14,8 @@ class Currency {
     required this.abbreviation,
     required this.scale,
     required this.name,
-    required this.rate
+    required this.rate,
+    required this.isVisible,
   });
 
   factory Currency.fromJson(Map<String, dynamic> map) {
@@ -27,6 +29,7 @@ class Currency {
       scale: map['Cur_Scale'],
       name: map['Cur_Name'],
       rate: map['Cur_OfficialRate'],
+      isVisible: true,
     );
   }
 }

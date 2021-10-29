@@ -13,3 +13,8 @@ class CurrencyLoaded extends CurrencyState {
   final List<Currency> currencies;
   const CurrencyLoaded(this.currencies);
 }
+
+class CurrencyVisibilityChange extends CurrencyState {
+  final List<Currency> currencies;
+  const CurrencyVisibilityChange(this.currencies);
+}

@@ -10,8 +10,16 @@ class CurrencyCubit extends Cubit<CurrencyState> {
 
   CurrencyCubit(this._currencyRepository) : super(const CurrencyInitial());
 
+  void emitLoadedState(List<Currency> currencyList) {
+    emit(CurrencyLoaded(currencyList));
+  }
+
   Future<void> getAllCurrencies() async {
     final currencies = await _currencyRepository.getAllCurrencies();
-    emit(CurrencyLoaded(currencies));
+    emitLoadedState(currencies);
+  }
+
+  void changeVisibleStatus(List<Currency> currencyList) {
+    emit(CurrencyVisibilityChange(currencyList));
   }
 }
