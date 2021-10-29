@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
             backgroundColor: Colors.white70,
             leading: IconButton(
               onPressed: () {
-                cubit.emitLoadedState(state.currencies);
+                cubit.emitLoadedState(state.currenciesChangeList);
                 Navigator.pop(context);
               },
               icon: const Icon(
@@ -37,7 +37,7 @@ class SettingsScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  cubit.emitLoadedState(state.currencies);
+                  cubit.emitLoadedState(state.currenciesChangeList);
                   Navigator.pop(context);
                 },
                 icon: const Icon(
@@ -66,7 +66,7 @@ class SettingsScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: ReorderableListView.builder(
               onReorder: (int oldIndex, int newIndex) {  },
-              itemCount: state.currencies.length,
+              itemCount: state.currenciesChangeList.length,
               itemBuilder: (context, index) {
                 return Padding(
                   key: ValueKey(index),
@@ -78,13 +78,13 @@ class SettingsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            state.currencies[index].abbreviation,
+                            state.currenciesChangeList[index].abbreviation,
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(
-                            '${state.currencies[index].scale} ${state.currencies[index].name}',
+                            '${state.currenciesChangeList[index].scale} ${state.currenciesChangeList[index].name}',
                             style: const TextStyle(
                               fontWeight: FontWeight.w200,
                               fontSize: 12,
@@ -95,10 +95,10 @@ class SettingsScreen extends StatelessWidget {
                       Row(
                         children: [
                           Switch(
-                            value: state.currencies[index].isVisible,
+                            value: state.currenciesChangeList[index].isVisible,
                             onChanged: (bool value) {
-                              state.currencies[index].isVisible = value;
-                              cubit.changeVisibleStatus(state.currencies);
+                              state.currenciesChangeList[index].isVisible = value;
+                              cubit.changeVisibleStatus(state.currenciesChangeList);
                             },
                           ),
                           const SizedBox(width: 50),

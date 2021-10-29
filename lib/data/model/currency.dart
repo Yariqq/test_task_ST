@@ -8,28 +8,12 @@ class Currency {
   final double rate;
   bool isVisible;
 
-  Currency({
-    required this.id,
-    required this.date,
-    required this.abbreviation,
-    required this.scale,
-    required this.name,
-    required this.rate,
-    required this.isVisible,
-  });
-
-  factory Currency.fromJson(Map<String, dynamic> map) {
-    var costyl = map['Date'].split('T');
-    var costyl1 = costyl[0].split('-');
-    String parsedDateString = '${costyl1[2]}.${costyl1[1]}.${costyl1[0]}';
-    return Currency(
-      id: map['Cur_ID'],
-      date: parsedDateString,
-      abbreviation: map['Cur_Abbreviation'],
-      scale: map['Cur_Scale'],
-      name: map['Cur_Name'],
-      rate: map['Cur_OfficialRate'],
-      isVisible: true,
-    );
-  }
+  Currency.fromJson(Map<String, dynamic> map) :
+        id = map['Cur_ID'],
+        date = '${map['Date'].split('T')[0].split('-')[2]}.${map['Date'].split('T')[0].split('-')[1]}.${map['Date'].split('T')[0].split('-')[0]}',
+        abbreviation = map['Cur_Abbreviation'],
+        scale = map['Cur_Scale'],
+        name = map['Cur_Name'],
+        rate = map['Cur_OfficialRate'],
+        isVisible = true;
 }

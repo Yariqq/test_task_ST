@@ -15,6 +15,6 @@ class CurrencyLoaded extends CurrencyState {
 }
 
 class CurrencyVisibilityChange extends CurrencyState {
-  final List<Currency> currencies;
-  const CurrencyVisibilityChange(this.currencies);
+  final List<Currency> currenciesChangeList;
+  const CurrencyVisibilityChange(this.currenciesChangeList);
 }
