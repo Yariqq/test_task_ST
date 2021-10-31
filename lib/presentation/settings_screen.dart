@@ -65,7 +65,9 @@ class SettingsScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: ReorderableListView.builder(
-              onReorder: (int oldIndex, int newIndex) {  },
+              onReorder: (int oldIndex, int newIndex) {
+                cubit.reorderList(oldIndex, newIndex, state);
+              },
               itemCount: state.currenciesChangeList.length,
               itemBuilder: (context, index) {
                 return Padding(
@@ -97,8 +99,7 @@ class SettingsScreen extends StatelessWidget {
                           Switch(
                             value: state.currenciesChangeList[index].isVisible,
                             onChanged: (bool value) {
-                              state.currenciesChangeList[index].isVisible = value;
-                              cubit.changeVisibleStatus(state.currenciesChangeList);
+                              cubit.changeVisibleStatus(state, value, index);
                             },
                           ),
                           const SizedBox(width: 50),

@@ -28,7 +28,7 @@ class ExchangeRatesScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  cubit.changeVisibleStatus(state.currencies);
+                  cubit.emitChangeCurrencyState(state.currencies);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SettingsScreen(cubit)));
                 },

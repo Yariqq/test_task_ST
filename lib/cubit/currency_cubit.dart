@@ -14,12 +14,26 @@ class CurrencyCubit extends Cubit<CurrencyState> {
     emit(CurrencyLoaded(currencyList));
   }
 
+  void emitChangeCurrencyState(List<Currency> changedList) {
+    emit(CurrencyVisibilityChange(changedList));
+  }
+
   Future<void> getAllCurrencies() async {
     final currencies = await _currencyRepository.getAllCurrencies();
     emitLoadedState(currencies);
   }
 
-  void changeVisibleStatus(List<Currency> currencyList) {
-    emit(CurrencyVisibilityChange(currencyList));
+  void changeVisibleStatus(dynamic state, bool value, int index) {
+    state.currenciesChangeList[index].isVisible = value;
+    emitChangeCurrencyState(state.currenciesChangeList);
+  }
+
+  void reorderList(int oldIndex, int newIndex, dynamic state) {
+    if (newIndex > oldIndex) {
+      newIndex -= 1;
+    }
+    final item = state.currenciesChangeList.removeAt(oldIndex);
+    state.currenciesChangeList.insert(newIndex, item);
+    emitChangeCurrencyState(state.currenciesChangeList);
   }
 }
