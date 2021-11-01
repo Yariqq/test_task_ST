@@ -21,10 +21,8 @@ class CurrencyRepositoryImpl implements CurrencyRepository {
     if (response.statusCode == 200) {
       final currencies = json.decode(response.body);
       return (currencies as List).map((currency) => CurrencyMapper.fromJson(currency)).toList();
-    } else {
-      print('Got error: ${response.statusCode}');
-      throw Error();
     }
+    return [];
   }
 
 }

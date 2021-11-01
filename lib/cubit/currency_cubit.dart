@@ -32,17 +32,29 @@ class CurrencyCubit extends Cubit<CurrencyState> {
     emitLoadedState(currencies);
   }
 
-  void changeVisibleStatus(dynamic state, bool value, int index) {
+  Future<void> deleteFromSharedPrefs() async {
+    final SharedPreferencesRepository sharedPrefs = SharedPreferencesRepository();
+    await sharedPrefs.remove('Currencies');
+  }
+
+  void changeVisibleStatus(CurrencyVisibilityChange state, bool value, int index) {
     state.currenciesChangeList[index].isVisible = value;
     emitChangeCurrencyState(state.currenciesChangeList);
   }
 
-  void reorderList(int oldIndex, int newIndex, dynamic state) {
+  void reorderList(int oldIndex, int newIndex, CurrencyVisibilityChange state) {
     if (newIndex > oldIndex) {
       newIndex -= 1;
     }
     final item = state.currenciesChangeList.removeAt(oldIndex);
     state.currenciesChangeList.insert(newIndex, item);
     emitChangeCurrencyState(state.currenciesChangeList);
+  }
+
+  void saveData(CurrencyVisibilityChange state) {
+    final SharedPreferencesRepository sharedPrefs = SharedPreferencesRepository();
+    sharedPrefs.saveCurrencies('Currencies',
+        CurrencyMapper.toJson(state.currenciesChangeList));
+    emitLoadedState(state.currenciesChangeList);
   }
 }

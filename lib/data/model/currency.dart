@@ -15,15 +15,7 @@ class Currency {
     required this.scale,
     required this.name,
     required this.rate,
-    this.isVisible = true,
+    required this.isVisible,
   });
 
-  // Currency.fromJson(Map<String, dynamic> map) :
-  //       id = map['Cur_ID'],
-  //       date = '${map['Date'].split('T')[0].split('-')[2]}.${map['Date'].split('T')[0].split('-')[1]}.${map['Date'].split('T')[0].split('-')[0]}',
-  //       abbreviation = map['Cur_Abbreviation'],
-  //       scale = map['Cur_Scale'],
-  //       name = map['Cur_Name'],
-  //       rate = map['Cur_OfficialRate'],
-  //       isVisible = true;
 }

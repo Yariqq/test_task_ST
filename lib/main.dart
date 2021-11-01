@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app_st_my/cubit/currency_cubit.dart';
 import 'package:test_app_st_my/data/repository/currency_repository.dart';
-import 'package:test_app_st_my/presentation/exchange_rates_screen.dart';
+import 'package:test_app_st_my/presentation/currencies/exchange_rates_screen.dart';
 
 void main() {
   runApp(const MyApp());

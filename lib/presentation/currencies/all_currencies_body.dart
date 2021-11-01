@@ -1,61 +1,17 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_app_st_my/cubit/currency_cubit.dart';
 import 'package:test_app_st_my/data/model/currency.dart';
-import 'package:test_app_st_my/presentation/settings_screen.dart';
 
-class ExchangeRatesScreen extends StatelessWidget {
-  const ExchangeRatesScreen({Key? key}) : super(key: key);
+class AllCurrenciesBody extends StatelessWidget {
+  final List<Currency> currencies;
+
+  const AllCurrenciesBody(this.currencies, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    CurrencyCubit cubit = BlocProvider.of<CurrencyCubit>(context);
-    cubit.getAllCurrencies();
-    return BlocBuilder<CurrencyCubit, CurrencyState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: state is CurrencyLoaded ?
-          AppBar(
-            backgroundColor: Colors.white70,
-            title: const Text(
-              'Курсы валют',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  cubit.emitChangeCurrencyState(state.currencies);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SettingsScreen(cubit)));
-                },
-                icon: const Icon(
-                  Icons.settings,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ) : null,
-          body: Builder(
-            builder: (context) {
-              if (state is CurrencyInitial) {
-                return buildLoadingIndicator();
-              } else if (state is CurrencyLoaded) {
-                return buildBodyContainer(state.currencies);
-              }
-              return buildLoadingIndicator();
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  Widget buildBodyContainer(List<Currency> currencies) {
-    return Column(
+    return currencies.isNotEmpty ?
+    Column(
       children: [
         Container(
           width: double.maxFinite,
@@ -108,12 +64,16 @@ class ExchangeRatesScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget buildLoadingIndicator() {
-    return const Center(
-      child: CircularProgressIndicator(),
+    ) :
+    const Center(
+      child: Text(
+        'Не удалось получить курсы валют.',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+          color: Colors.red
+        ),
+      ),
     );
   }
 
