@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:test_app_st_my/data/local/shared_prefs.dart';
 import 'package:test_app_st_my/data/model/currency.dart';
+import 'package:test_app_st_my/data/model/currency_mapper.dart';
 import 'package:test_app_st_my/data/repository/currency_repository.dart';
 
 part 'currency_state.dart';
@@ -19,7 +21,14 @@ class CurrencyCubit extends Cubit<CurrencyState> {
   }
 
   Future<void> getAllCurrencies() async {
-    final currencies = await _currencyRepository.getAllCurrencies();
+    final SharedPreferencesRepository sharedPrefs = SharedPreferencesRepository();
+    var currencies = await sharedPrefs.getCurrencies('Currencies');
+    if (currencies == null) {
+      currencies = await _currencyRepository.getAllCurrencies();
+    } else {
+      currencies = (currencies as List).map((currency) =>
+          CurrencyMapper.fromJson(currency)).toList();
+    }
     emitLoadedState(currencies);
   }
 

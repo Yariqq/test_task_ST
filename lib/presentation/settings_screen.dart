@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app_st_my/cubit/currency_cubit.dart';
+import 'package:test_app_st_my/data/local/shared_prefs.dart';
+import 'package:test_app_st_my/data/model/currency_mapper.dart';
 
 class SettingsScreen extends StatelessWidget {
 
@@ -12,6 +14,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SharedPreferencesRepository sharedPrefs = SharedPreferencesRepository();
     return BlocBuilder<CurrencyCubit, dynamic>(
       bloc: cubit,
       builder: (context, state) {
@@ -38,6 +41,8 @@ class SettingsScreen extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   cubit.emitLoadedState(state.currenciesChangeList);
+                  sharedPrefs.saveCurrencies('Currencies',
+                      CurrencyMapper.toJson(state.currenciesChangeList));
                   Navigator.pop(context);
                 },
                 icon: const Icon(
