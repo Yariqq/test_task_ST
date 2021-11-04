@@ -1,15 +1,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app_st_my/cubit/currency_cubit.dart';
-
-import '../settings/settings_screen.dart';
+import 'package:test_app_st_my/features/exchange_rates/presentation/currencies/cubit/currency_cubit.dart';
+import 'package:test_app_st_my/features/exchange_rates/presentation/settings/pages/settings_screen.dart';
 
 class CurrenciesAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final CurrencyCubit cubit;
   final CurrencyLoaded state;
+  final CurrencyCubit cubit;
 
-  const CurrenciesAppBar(this.cubit, this.state, {Key? key}) : super(key: key);
+  const CurrenciesAppBar(this.state, this.cubit, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

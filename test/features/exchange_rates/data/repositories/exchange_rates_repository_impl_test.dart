@@ -21,7 +21,7 @@ void main() {
     mockLocalDataSource = MockExchangeRatesLocalDataSource();
     repository = ExchangeRatesRepositoryImpl(
       remoteDataSource: mockRemoteDataSource,
-      localDataSource: mockLocalDataSource,
+      //localDataSource: mockLocalDataSource,
     );
   });
 

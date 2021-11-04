@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_app_st_my/cubit/currency_cubit.dart';
-import 'package:test_app_st_my/data/repository/currency_repository.dart';
-import 'package:test_app_st_my/presentation/currencies/exchange_rates_screen.dart';
+import 'features/exchange_rates/presentation/currencies/cubit/currency_cubit.dart';
+import 'features/exchange_rates/presentation/currencies/pages/exchange_rates_screen.dart';
+import 'injection_container.dart' as di;
+import 'injection_container.dart';
 
-void main() {
+void main() async {
+  await di.init();
   runApp(const MyApp());
 }
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: BlocProvider(
-        create: (context) => CurrencyCubit(CurrencyRepositoryImpl()),
+        create: (_) => serviceLocator<CurrencyCubit>(),
         child: const ExchangeRatesScreen(),
       ),
     );

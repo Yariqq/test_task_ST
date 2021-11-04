@@ -1,13 +1,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app_st_my/cubit/currency_cubit.dart';
+import 'package:test_app_st_my/features/exchange_rates/presentation/currencies/cubit/currency_cubit.dart';
 
 class SettingsBody extends StatelessWidget {
-  final CurrencyCubit cubit;
   final CurrencyVisibilityChange state;
+  final CurrencyCubit cubit;
 
-  const SettingsBody(this.cubit, this.state, {Key? key}) : super(key: key);
+  const SettingsBody({required this.state, required this.cubit,  Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class SettingsBody extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            cubit.deleteFromSharedPrefs();
+            //cubit.deleteFromSharedPrefs();
           },
           child: Container(
             width: double.maxFinite,

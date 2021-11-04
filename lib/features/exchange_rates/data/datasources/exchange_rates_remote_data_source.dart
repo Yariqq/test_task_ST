@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:test_app_st_my/features/exchange_rates/data/models/currency_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,13 +14,17 @@ class ExchangeRatesRemoteDataSourceImpl implements ExchangeRatesRemoteDataSource
 
   @override
   Future<List<CurrencyModel>> getAllCurrencies() async {
-    client.get(
+    final response = await client.get(
       Uri.parse('https://www.nbrb.by/api/exrates/rates?periodicity=0'),
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: {'Content-Type': 'application/json'},
     );
-    return await [CurrencyModel(id: 1, date: '', abbreviation: '', scale: 1, name: '', rate: 2.0, isVisible: true)];
+    if (response.statusCode == 200) {
+      final currencies = json.decode(response.body);
+      return (currencies as List).map((currency) =>
+          CurrencyModel.fromJson(currency)).toList();
+    } else {
+      return [];
+    }
   }
 
 }
