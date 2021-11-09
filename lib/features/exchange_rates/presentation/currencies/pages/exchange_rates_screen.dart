@@ -8,12 +8,12 @@ import 'package:test_app_st_my/features/exchange_rates/presentation/currencies/w
 import 'package:test_app_st_my/injection_container.dart';
 
 class ExchangeRatesScreen extends StatelessWidget {
-  const ExchangeRatesScreen({Key? key}) : super(key: key);
+  final CurrencyCubit cubit;
+
+  const ExchangeRatesScreen(this.cubit, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final cubit = BlocProvider.of<CurrencyCubit>(context);
-    cubit.getAllCurrencies();
     return BlocBuilder<CurrencyCubit, CurrencyState>(
       builder: (context, state) {
         return Scaffold(
