@@ -5,6 +5,8 @@
 import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:test_app_st_my/features/exchange_rates/data/models/currency_settings_model.dart'
+    as _i5;
 import 'package:test_app_st_my/features/exchange_rates/domain/entities/currency.dart'
     as _i4;
 import 'package:test_app_st_my/features/exchange_rates/domain/repositories/exchange_rates_repository.dart'
@@ -33,6 +35,11 @@ class MockExchangeRatesRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#getAllCurrencies, []),
               returnValue: Future<List<_i4.Currency>>.value(<_i4.Currency>[]))
           as _i3.Future<List<_i4.Currency>>);
+  @override
+  _i3.Future<void> cacheSettings(List<_i5.CurrencySettingsModel>? settings) =>
+      (super.noSuchMethod(Invocation.method(#cacheSettings, [settings]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
   String toString() => super.toString();
 }

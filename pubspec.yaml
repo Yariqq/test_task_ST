@@ -14,10 +14,13 @@ dependencies:
 
   bloc: ^7.2.1
   cupertino_icons: ^1.0.2
+  dio: ^4.0.1
   equatable: ^2.0.3
   flutter_bloc: ^7.3.1
   get_it: ^7.2.0
   http: ^0.13.4
+  json_annotation: ^4.3.0
+  retrofit: ^2.1.0
   shared_preferences: ^2.0.8
 
 dev_dependencies:
@@ -26,6 +29,7 @@ dev_dependencies:
 
   build_runner: ^2.1.4
   flutter_lints: ^1.0.0
+  json_serializable: ^6.0.1
   mockito: ^5.0.16
 
 flutter:

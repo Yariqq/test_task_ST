@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:test_app_st_my/features/exchange_rates/presentation/currencies/cubit/currency_cubit.dart';
 
 class SettingsAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const SettingsAppBar({Key? key}) : super(key: key);
+  final CurrencyCubit cubit;
+  final CurrencyVisibilityChange state;
+
+  const SettingsAppBar(this.cubit, this.state, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +31,8 @@ class SettingsAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: () {
-            // cubit.saveData(state);
-            // Navigator.pop(context);
+            cubit.saveData(state);
+            Navigator.pop(context);
           },
           icon: const Icon(
             Icons.done,

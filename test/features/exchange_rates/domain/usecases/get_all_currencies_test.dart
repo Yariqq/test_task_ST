@@ -44,7 +44,7 @@ void main() {
     () async {
       when(mockExchangeRatesRepository.getAllCurrencies())
           .thenAnswer((_) async => tCurrencies);
-      final result = await usecase();
+      final result = await usecase(NoParams());
       expect(result, tCurrencies);
       //verifyNoMoreInteractions(mockExchangeRatesRepository);
     },

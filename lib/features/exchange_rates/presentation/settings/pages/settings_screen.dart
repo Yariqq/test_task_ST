@@ -13,17 +13,22 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const SettingsAppBar(),
-      body: BlocBuilder<CurrencyCubit, CurrencyState>(
-        bloc: cubit,
-        builder: (context, state) {
-          if (state is CurrencyVisibilityChange) {
-            return SettingsBody(state: state, cubit: cubit);
-          }
-          return const LoadingIndicator();
-        },
-      ),
+    return BlocBuilder<CurrencyCubit, CurrencyState>(
+      bloc: cubit,
+      builder: (context, state) {
+        return Scaffold(
+          appBar: state is CurrencyVisibilityChange ?
+            SettingsAppBar(cubit, state) : null,
+          body: Builder(
+            builder: (context) {
+              if (state is CurrencyVisibilityChange) {
+                return SettingsBody(state: state, cubit: cubit);
+              }
+              return const LoadingIndicator();
+            },
+          ),
+        );
+      },
     );
   }
 
