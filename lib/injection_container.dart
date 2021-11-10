@@ -5,10 +5,11 @@ import 'package:test_app_st_my/features/exchange_rates/data/datasources/exchange
 import 'package:test_app_st_my/features/exchange_rates/data/repositories/exchange_rates_repository_impl.dart';
 import 'package:test_app_st_my/features/exchange_rates/domain/usecases/cache_currencies_settings.dart';
 import 'package:test_app_st_my/features/exchange_rates/domain/usecases/get_all_currencies.dart';
-import 'package:test_app_st_my/features/exchange_rates/presentation/currencies/cubit/currency_cubit.dart';
 import 'features/exchange_rates/data/datasources/exchange_rates_local_data_source.dart';
 import 'features/exchange_rates/domain/repositories/exchange_rates_repository.dart';
 import 'package:cherrypick/cherrypick.dart';
+
+import 'features/exchange_rates/presentation/currencies/bloc/currency_bloc.dart';
 
 class InjectionContainer extends Module {
 
@@ -19,52 +20,40 @@ class InjectionContainer extends Module {
   @override
   Future<void> builder(Scope currentScope) async {
     //CUBIT
-    bind<CurrencyCubit>().withName('currencyCubit').toProvide(() =>
-        CurrencyCubit(currentScope.resolve<GetAllCurrencies>(
-            named: 'getAllCurrenciesUseCase'),
-            currentScope.resolve<CacheCurrenciesSettings>(
-                named: 'cacheSettingsUseCase')));
+    bind<CurrencyBloc>().toProvide(() => CurrencyBloc(
+      currentScope.resolve<GetAllCurrencies>(),
+      currentScope.resolve<CacheCurrenciesSettings>(),
+    ));
 
     //USECASES
-    bind<GetAllCurrencies>()
-        .withName('getAllCurrenciesUseCase')
-        .toProvide(() =>
-        GetAllCurrencies(currentScope.resolve<ExchangeRatesRepository>(
-            named: 'exchangeRatesRepo'))).singeltone();
+    bind<GetAllCurrencies>().toProvide(() => GetAllCurrencies(
+      currentScope.resolve<ExchangeRatesRepository>(),
+    )).singeltone();
 
-    bind<CacheCurrenciesSettings>()
-        .withName('cacheSettingsUseCase')
-        .toProvide(() =>
-        CacheCurrenciesSettings(currentScope.resolve<ExchangeRatesRepository>(
-            named: 'exchangeRatesRepo'))).singeltone();
+    bind<CacheCurrenciesSettings>().toProvide(() => CacheCurrenciesSettings(
+      currentScope.resolve<ExchangeRatesRepository>(),
+    )).singeltone();
 
     //REPOSITORY
-    bind<ExchangeRatesRepository>()
-        .withName('exchangeRatesRepo')
-        .toProvide(() =>
-        ExchangeRatesRepositoryImpl(remoteDataSource: currentScope.resolve<
-            ExchangeRatesRemoteDataSource>(
-            named: 'exchangeRatesRemoteDataSource'),
-            localDataSource: currentScope.resolve<ExchangeRatesLocalDataSource>(
-                named: 'exchangeRatesLocalDataSource'))).singeltone();
+    bind<ExchangeRatesRepository>().toProvide(() => ExchangeRatesRepositoryImpl(
+      remoteDataSource: currentScope.resolve<ExchangeRatesRemoteDataSource>(),
+      localDataSource: currentScope.resolve<ExchangeRatesLocalDataSource>(),
+    )).singeltone();
 
     //DATASOURCES
-    bind<ExchangeRatesRemoteDataSource>().withName(
-        'exchangeRatesRemoteDataSource').toProvide(() =>
+    bind<ExchangeRatesRemoteDataSource>().toProvide(() =>
         ExchangeRatesRemoteDataSourceImpl(
-            currentScope.resolve<Dio>(named: 'dio'))).singeltone();
+          currentScope.resolve<Dio>(),
+        )).singeltone();
 
-    bind<ExchangeRatesLocalDataSource>().withName(
-        'exchangeRatesLocalDataSource').toProvide(() =>
+    bind<ExchangeRatesLocalDataSource>().toProvide(() =>
         ExchangeRatesLocalDataSourceImpl(
-            currentScope.resolve<SharedPreferences>(
-                named: 'sharedPreferences'))).singeltone();
+          currentScope.resolve<SharedPreferences>(),
+        )).singeltone();
 
     //THIRD-PARTY LIBRARIES
-    bind<Dio>().withName('dio').toInstance(Dio()).singeltone();
-    //final sharedPreferences = await SharedPreferences.getInstance();
-    bind<SharedPreferences>().withName('sharedPreferences').toInstance(
-        sharedPreferences).singeltone();
+    bind<Dio>().toInstance(Dio()).singeltone();
+    bind<SharedPreferences>().toInstance(sharedPreferences).singeltone();
   }
 
 }

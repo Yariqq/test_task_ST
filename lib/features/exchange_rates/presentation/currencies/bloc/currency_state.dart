@@ -1,4 +1,4 @@
-part of 'currency_cubit.dart';
+part of 'currency_bloc.dart';
 
 @immutable
 abstract class CurrencyState {

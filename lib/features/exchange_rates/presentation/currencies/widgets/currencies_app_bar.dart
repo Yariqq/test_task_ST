@@ -1,14 +1,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app_st_my/features/exchange_rates/presentation/currencies/cubit/currency_cubit.dart';
+import 'package:test_app_st_my/features/exchange_rates/presentation/currencies/bloc/currency_bloc.dart';
 import 'package:test_app_st_my/features/exchange_rates/presentation/settings/pages/settings_screen.dart';
 
 class CurrenciesAppBar extends StatelessWidget implements PreferredSizeWidget {
   final CurrencyLoaded state;
-  final CurrencyCubit cubit;
+  final CurrencyBloc bloc;
 
-  const CurrenciesAppBar(this.state, this.cubit, {Key? key}) : super(key: key);
+  const CurrenciesAppBar(this.state, this.bloc, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,9 @@ class CurrenciesAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (state.currencies.isNotEmpty)
         IconButton(
           onPressed: () {
-            cubit.emitChangeCurrencyState(state.currencies);
+            bloc.add(ChangeStateEvent(state.currencies));
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SettingsScreen(cubit)));
+                MaterialPageRoute(builder: (context) => SettingsScreen(bloc)));
           },
           icon: const Icon(
             Icons.settings,
