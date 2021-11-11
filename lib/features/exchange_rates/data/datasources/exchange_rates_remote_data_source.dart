@@ -1,9 +1,7 @@
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:test_app_st_my/core/errors/exceptions.dart';
 import 'package:test_app_st_my/features/exchange_rates/data/models/currency_model.dart';
-import 'package:http/http.dart' as http;
 
 abstract class ExchangeRatesRemoteDataSource {
   Future<List<CurrencyModel>> getAllCurrencies();

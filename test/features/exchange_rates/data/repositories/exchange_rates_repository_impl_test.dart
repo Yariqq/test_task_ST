@@ -2,6 +2,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:test_app_st_my/core/errors/exceptions.dart';
 import 'package:test_app_st_my/features/exchange_rates/data/datasources/exchange_rates_local_data_source.dart';
 import 'package:test_app_st_my/features/exchange_rates/data/datasources/exchange_rates_remote_data_source.dart';
 import 'package:test_app_st_my/features/exchange_rates/data/models/currency_model.dart';
@@ -48,15 +49,15 @@ void main() {
 
   final List<Currency> tCurrencies = tCurrenciesModels;
 
-  test(
-    'should return data from remote data source if response is not an error',
-    () async {
-      when(mockRemoteDataSource.getAllCurrencies())
-          .thenAnswer((_) async => tCurrenciesModels);
-      final result = await repository.getAllCurrencies();
-      expect(result, tCurrencies);
-    },
-  );
+  // test(
+  //   'should return data from remote data source if response is not an error',
+  //   () async {
+  //     when(mockRemoteDataSource.getAllCurrencies())
+  //         .thenAnswer((_) async => tCurrenciesModels);
+  //     final result = await repository.getAllCurrencies();
+  //     expect(result, tCurrencies);
+  //   },
+  // );
 
   // test(
   //   'should return exception from remote data source if response is an error',
